@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private ViewPager2 viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +23,15 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
 
-        tabLayout.setupWithViewPager(viewPager);
 
-        VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+
+        VPAdapter vpAdapter = new VPAdapter(this);
         vpAdapter.addFragment(new Fragment1(), "CHATS");
         vpAdapter.addFragment(new Fragment2(), "STATUS");
         vpAdapter.addFragment(new Fragment3(), "CALLS");
         viewPager.setAdapter(vpAdapter);
 
 
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> tab.setText("Tab " + (position + 1))).attach();
     }
 }
